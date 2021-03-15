@@ -20,6 +20,7 @@
 // Le validazioni e i controlli possiamo farli anche in un secondo momento.
 // Ricordatevi che se non sappiamo quante volte dobbiamo fare una cosa ci serve…
 
+
 function getRandomNum(min, max) {
     var minRnd = min;
     var maxRnd = max - minRnd + 1;
@@ -46,11 +47,13 @@ function campoMinato() {
             console.log("Hai perso! Il tuo punteggio è ", + userScore);
             break;
         } else {
-            userScore = userValues.length + 1;
             userValues.push(value);
+            userScore = userValues.length + 1;
         }
     }
     console.log(userValues, userScore);
 }
-
-campoMinato();
+var button = document.getElementById('startButton');
+    button.addEventListener('click', function(){
+        campoMinato();
+    } )
