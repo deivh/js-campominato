@@ -27,52 +27,69 @@ function getRandomNum(min, max) { //funzione che genera un numero casuale dati i
     var rnd1 = Math.floor(Math.random() * maxRnd) + minRnd; 
     return rnd1; 
 }
-function mineCheck (values, value) {  //funzione che controlla se gli elementi sono ripetuti nell'array
+function mineCheck (values, val) {  //funzione che controlla se gli elementi sono ripetuti nell'array
     var values = [];    
-    while (values.includes(value)) {
+    while (values.includes(val)) {
     var value= getRandomNum(1, 100)
     }
+}
+
+function valIncludes(values, val) {
+    if (values.includes(val)) {
+        console.log("Hai già inserito " , val);
+        return false;
+    } else return true;
 }
 
 function campoMinato() { //funzione dell'esercizio campo minato
     var mineField = [];
     var d = parseInt(prompt("Inserisci 0 per la modalità facile, 1 per la difficoltà standard, 2 per sfidare le sorti del destino."))
-    switch(d) {
-        case 0: 
-            d = 100;
-            break;
-        case 1: 
-            d = 80;
-            break;
-        case 2: 
-            d = 50;
-            break;
-        default:
-            console.log("Non scegliendo hai scelto la morte!")
-            d = 100;    
-        }
+    if (d>=0 && d<3) {
 
-    for (i=0; i<16; i++) {
-        var mine = getRandomNum(1, d);
-        mineCheck(mineField, mine);
-        mineField.push(mine);
+        switch(d) {
+            case 0: 
+                d = 100;
+                break;
+            case 1: 
+                d = 80;
+                break;
+            case 2: 
+                d = 50;
+                break;
+            default:
+                console.log("Non scegliendo hai scelto la morte!")
+                d = 100;    
+            }
 
-    }
-    console.log(mineField);
-    var userValues = [];
-    var userScore = 0;
-    var r = d - mineField.length;
-    for (i=0; i<r; i++) {
-        var value = parseInt(prompt("Inserisci un numero compreso tra 1 e " + d));
-        if (mineField.includes(value)) {
-            console.log("Hai perso! Il tuo punteggio è ", userScore);
-            break;
-        } else {
-            userValues.push(value);
-            userScore = userValues.length + 1;
+        for (i=0; i<16; i++) {
+            var mine = getRandomNum(1, d);
+            mineCheck(mineField, mine);
+            mineField.push(mine);
+
         }
+        console.log(mineField);
+        var userValues = [];
+        var userScore = 0;
+        var r = d - mineField.length; //calcola il numero di iterazioni dove d sta per il numero massimo e ne sottrae gli elementi che costituiscono "le mine"
+        for (i=0; i<r; i++) {
+            var value = parseInt(prompt("Inserisci un numero compreso tra 1 e " + d));
+            var valTwin = valIncludes(userValues, value);
+            if (mineField.includes(value)) {
+                console.log("Hai perso! Il tuo punteggio è ", userScore);
+                break;
+            } else if (!valTwin) {
+                console.log(value + " è già presente nella lista dei valori inseriti, reinserisci un valore valido");
+                value = parseInt(prompt("Inserisci un numero compreso tra 1 e " + d));
+            } 
+            else {
+                userValues.push(value);
+                userScore = userValues.length + 1;
+            }
+        }
+        console.log(userValues, userScore);
+    } else {
+        console.log("Hai inserito un valore al di fuori del range di difficoltà. Sei troppo pro.")
     }
-    console.log(userValues, userScore);
 }
 
 
