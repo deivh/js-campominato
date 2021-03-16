@@ -21,30 +21,51 @@
 // Ricordatevi che se non sappiamo quante volte dobbiamo fare una cosa ci serve…
 
 
-function getRandomNum(min, max) {
+function getRandomNum(min, max) { //funzione che genera un numero casuale dati i due estremi
     var minRnd = min;
     var maxRnd = max - minRnd + 1;
     var rnd1 = Math.floor(Math.random() * maxRnd) + minRnd; 
     return rnd1; 
 }
+function mineCheck (values, value) {  //funzione che controlla se gli elementi sono ripetuti nell'array
+    var values = [];    
+    while (values.includes(value)) {
+    var value= getRandomNum(1, 100)
+    }
+}
 
-function campoMinato() {
+function campoMinato() { //funzione dell'esercizio campo minato
     var mineField = [];
-    for (i=0; i<16; i++) {
-        var mine = getRandomNum(1, 100);
-        while (mineField.includes(mine)) {
-            mine= getRandomNum(1, 100)
+    var d = parseInt(prompt("Inserisci 0 per la modalità facile, 1 per la difficoltà standard, 2 per sfidare le sorti del destino."))
+    switch(d) {
+        case 0: 
+            d = 100;
+            break;
+        case 1: 
+            d = 80;
+            break;
+        case 2: 
+            d = 50;
+            break;
+        default:
+            console.log("Non scegliendo hai scelto la morte!")
+            d = 100;    
         }
+
+    for (i=0; i<16; i++) {
+        var mine = getRandomNum(1, d);
+        mineCheck(mineField, mine);
         mineField.push(mine);
 
     }
     console.log(mineField);
     var userValues = [];
-    for (i=0; i<84; i++) {
-        var userScore = 0;
-        var value = parseInt(prompt("Inserisci un numero"));
+    var userScore = 0;
+    var r = d - mineField.length;
+    for (i=0; i<r; i++) {
+        var value = parseInt(prompt("Inserisci un numero compreso tra 1 e " + d));
         if (mineField.includes(value)) {
-            console.log("Hai perso! Il tuo punteggio è ", + userScore);
+            console.log("Hai perso! Il tuo punteggio è ", userScore);
             break;
         } else {
             userValues.push(value);
@@ -53,6 +74,8 @@ function campoMinato() {
     }
     console.log(userValues, userScore);
 }
+
+
 var button = document.getElementById('startButton');
     button.addEventListener('click', function(){
         campoMinato();
