@@ -80,6 +80,7 @@ function campoMinato() { //funzione dell'esercizio campo minato
             } else if (!valTwin) {
                 console.log(value + " è già presente nella lista dei valori inseriti, reinserisci un valore valido");
                 value = parseInt(prompt("Inserisci un numero compreso tra 1 e " + d));
+                i--;
             } 
             else {
                 userValues.push(value);
